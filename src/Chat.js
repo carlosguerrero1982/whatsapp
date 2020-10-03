@@ -12,7 +12,7 @@ function Chat() {
             <div className="chat_header">
 
             <Avatar />
-new
+
            
 
             <div className="chat_headerInfo">
