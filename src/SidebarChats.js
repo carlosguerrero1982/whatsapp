@@ -11,7 +11,7 @@ function SidebarChats() {
 
             <div className="SidebarChat_info">
 
-                <h2>ROOM NAME</h2>
+                <h2>Room Name</h2>
                 <p>This is the last message</p>
                 
 
