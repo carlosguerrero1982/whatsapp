@@ -2,6 +2,7 @@ import express from 'express'
 import mongoose from 'mongoose';
 import Messages from './dbMessages.js';
 import Pusher from 'pusher';
+import cors from "cors";
 
 const app = express()
 const port = process.env.PORT || 9000
@@ -16,7 +17,7 @@ const pusher = new Pusher({
 
 
 app.use(express.json());
-
+app.use(cors())
 
 const connection_url = 'mongodb+srv://admin:sobrino1@cluster0.brqvj.mongodb.net/whatsapp?retryWrites=true&w=majority'
 
@@ -40,6 +41,22 @@ db.once('open', ()=>{
     changeStream.on('change', (change)=>{
 
         console.log(change);
+
+        if(change.operationType ==='insert'){
+
+            const MessageDetails = change.fullDocument;
+            pusher.trigger('messages', 'inserted',
+
+            {
+
+                name: MessageDetails.name,
+                message: MessageDetails.message,
+            });
+        } else{
+
+            console.log("ERROR AL INSERTAR");
+
+        }
 
     });
 });
